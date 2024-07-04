@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import * as echarts from "echarts"
 import { onMounted, ref } from "vue";
+import { useWebSocket } from '@vueuse/core'
+
+const { status, data, send, open, close } = useWebSocket('ws://localhost:3002', {
+  autoReconnect: true,
+})
+// console.log(status, data, send, open, close,'vueuse的websocket')
+console.log(data.value, 'vueuse的websocket')
 const chartsContainer = ref(null)
 
 onMounted(() => {
   const chartInstance = echarts.init(chartsContainer.value)
-  console.log(chartInstance)
+  // console.log(chartInstance,'echarts实例')
   chartInstance.setOption({
     xAxis: {
       type: 'category',
@@ -43,13 +50,13 @@ onMounted(() => {
   })
 })
 
-const getWebSocket = () => {
-    // 建立websocket连接
-    const ws =new WebSocket('ws://localhost:3000')
-    console.log(ws)
-}
-
-getWebSocket()
+// const getWebSocket = () => {
+//     // 建立websocket连接
+//     const ws =new WebSocket('ws://localhost:3000')
+//     console.log(ws)
+// }
+//
+// getWebSocket()
 </script>
 
 <template>
